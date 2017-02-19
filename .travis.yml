@@ -1,0 +1,15 @@
+
+sudo: required
+env:
+   global:
+      - "FILE=bind-9.11.0-P1.deb"
+script: make start
+
+services:
+    - docker
+
+before_install:
+    - docker build -t bind9 .
+
+after_success:
+  "curl --ftp-create-dirs -T data/build/$FILE -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER/build/$FILE"

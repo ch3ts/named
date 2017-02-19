@@ -1,0 +1,12 @@
+Package: bind9
+Version: 1.0
+Section: net
+Priority: optional
+Architecture: amd64
+Maintainer: Ulrich Etilé <chets@dotbsd-fr.org>
+Description: Internet Domain Name Server
+ The Berkeley Internet Name Domain (BIND) implements an Internet domain
+ name server.  BIND is the most widely-used name server software on the
+ Internet, and is supported by the Internet Software Consortium, www.isc.org.
+ .
+ This package provides the server and related configuration files.
