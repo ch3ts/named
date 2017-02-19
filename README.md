@@ -13,8 +13,9 @@ and use
   * make stop
 
 
- Library required: 
+ Libraries required: 
+  * libterm-readline-gnu-perl
   * libssl1.0.0
-  
 
+<br/><br/><br/>
 NB: If you use bind9 in a Docker, make sure to add capabilities for the container.
