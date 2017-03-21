@@ -5,5 +5,5 @@ bind:
   - ./data:/data
   - ./dpkg-builder:/data/builder
   command: make
-  tty: true
+  tty: false
 
