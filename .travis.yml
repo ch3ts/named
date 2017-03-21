@@ -12,4 +12,4 @@ before_install:
     - docker build -t bind9 .
 
 after_success:
-  "curl --ftp-create-dirs -T data/build/$FILE -u $FTP_USERNAME:$FTP_PASSWORD ftp://$FTP_SERVER/build/$FILE"
+  "curl --ftp-create-dirs -T data/build/$FILE -u $FTP_USERNAME:$FTP_PASSWORD $SCHEME://$FTP_SERVER/build/$FILE"
