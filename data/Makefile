@@ -1,9 +1,12 @@
 
-VERSION=9.11.0-P1
+ifndef BIND_VERSION
+	BIND_VERSION=9.11.0-P1
+endif
+
 DEBUG=yes
 EXEC=bind
 CFLAGS=-fno-strict-aliasing -static
-DESTDIR=/data/build/$(EXEC)-$(VERSION)
+DESTDIR=/data/build/$(EXEC)-$(BIND_VERSION)
 
 all: $(EXEC)
 
@@ -12,16 +15,16 @@ bind: download build install package clean
 	@echo "Installation termined."
 
 download:
-	wget -O /tmp/$(EXEC).tar.gz ftp://ftp.isc.org/isc/bind9/$(VERSION)/bind-$(VERSION).tar.gz
+	wget -O /tmp/$(EXEC).tar.gz ftp://ftp.isc.org/isc/bind9/$(BIND_VERSION)/bind-$(BIND_VERSION).tar.gz
 
 build: download
-	@mkdir -p /data/$(EXEC)-$(VERSION)
-	@mkdir -p /data/build/$(EXEC)-$(VERSION)/
+	@mkdir -p /data/$(EXEC)-$(BIND_VERSION)
+	@mkdir -p /data/build/$(EXEC)-$(BIND_VERSION)/
 	@chmod -R 0755 /data/ 
 	
 	tar -zxvf /tmp/$(EXEC).tar.gz -C /data/
 	
-	cd /data/$(EXEC)-$(VERSION) && CFLAGS="$(CFLAGS)" ./configure --prefix=/usr \
+	cd /data/$(EXEC)-$(BIND_VERSION) && CFLAGS="$(CFLAGS)" ./configure --prefix=/usr \
 		--mandir=/usr/share/man \
 		--infodir=/usr/share/info \
 		--sysconfdir=/etc/bind \
@@ -41,16 +44,16 @@ build: download
 		--enable-seccomp
 
 install: build
-	make -C /data/$(EXEC)-$(VERSION) all
-	make -C /data/$(EXEC)-$(VERSION) install DESTDIR=/data/build/$(EXEC)-$(VERSION)
+	make -C /data/$(EXEC)-$(BIND_VERSION) all
+	make -C /data/$(EXEC)-$(BIND_VERSION) install DESTDIR=/data/build/$(EXEC)-$(BIND_VERSION)
 
 package:
-	cp -a /data/builder/* /data/build/$(EXEC)-$(VERSION)/
-	cd /data/build/ && dpkg-deb --build $(EXEC)-$(VERSION)
+	cp -rv /data/builder/* /data/build/$(EXEC)-$(BIND_VERSION)/
+	cd /data/build/ && dpkg-deb --build $(EXEC)-$(BIND_VERSION)
 
 .PHONY: clean
 
 clean:
-	rm -rf /data/$(EXEC)-$(VERSION)
-	rm -rf /data/build/$(EXEC)-$(VERSION)
+	rm -rf /data/$(EXEC)-$(BIND_VERSION)
+	rm -rf /data/build/$(EXEC)-$(BIND_VERSION)
 	

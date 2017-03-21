@@ -2,9 +2,13 @@
 DOCKER=docker
 DC=/usr/local/bin/docker-compose
 
+ifdef BIND_VERSION
+	ARG=-e BIND_VERSION=$(BIND_VERSION)
+endif
+
 all:
 start:
-	@$(DC) up
+	@$(DC) run $(ARG) bind
 
 stop:
 	@$(DC) down
@@ -16,7 +20,7 @@ build:
 	@$(DOCKER) build -t bind9 .
 
 shell:
-	@$(DOCKER) exec -t bind9 bash
+	@$(DC) exec bind bash
 
 .PHONY: clean
 

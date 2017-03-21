@@ -4,7 +4,8 @@ MAINTAINER Ulrich Etile <chets@dotbsd-fr.org>
 # ---------------------------------------------------
 # Variables
 # ---------------------------------------------------
-ENV DEBIAN_FRONTEND = noninteractive
+ENV DEBIAN_FRONTEND noninteractive
+ENV BIND_VERSION ${BIND_VERSION}
 
 # ---------------------------------------------------
 # Installation
