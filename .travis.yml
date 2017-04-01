@@ -1,9 +1,13 @@
 
 sudo: required
 env:
-   global:
-      - "FILE=bind-9.11.0-P1.deb"
-script: make start
+  global:
+    - BIND_VERSION=$(awk -F '=' '{print $2}' .bind_version)
+before_script: make latest-version
+script: make
+after_script: export BIND_VERSION=$(awk -F '=' '{print $2}' .bind_version)
+  
+
 
 services:
     - docker
@@ -12,4 +16,4 @@ before_install:
     - docker build -t bind9 .
 
 after_success:
-  "curl --ftp-create-dirs -T data/build/$FILE -u $FTP_USERNAME:$FTP_PASSWORD $SCHEME://$FTP_SERVER/build/$FILE"
+  "curl --ftp-create-dirs -T data/build/bind-${BIND_VERSION}.deb -u $FTP_USERNAME:$FTP_PASSWORD $SCHEME://$FTP_SERVER/build/bind-${BIND_VERSION}.deb"

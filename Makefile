@@ -1,14 +1,22 @@
 
 DOCKER=docker
-DC=/usr/local/bin/docker-compose
+DC=docker-compose
+PERL_SCRIPT=latest_version.pl
 
-ifdef BIND_VERSION
-	ARG=-e BIND_VERSION=$(BIND_VERSION)
+
+ifeq ($(shell test -e .bind_version && echo -n yes), yes)
+	VERSION=$(shell cat .bind_version)
 endif
 
-all:
+
+
+all: start
+
+latest-version:
+	@perl $(PERL_SCRIPT)
+
 start:
-	@$(DC) run $(ARG) bind
+	@$(DC) run $(VERSION) bind
 
 stop:
 	@$(DC) down
@@ -25,4 +33,4 @@ shell:
 .PHONY: clean
 
 clean:
-	rm -rf data/build/*
+	rm -rf data/build/* .bind_version
