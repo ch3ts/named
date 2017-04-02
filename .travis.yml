@@ -1,0 +1,17 @@
+
+sudo: true
+
+before_script:
+  - make latest-version
+  - export BIND_VERSION=$(awk -F '=' '{print $2}' .bind_version)
+script:
+  - make
+
+services:
+    - docker
+
+before_install:
+    - docker build -t bind9 .
+
+after_success:
+  "curl --ftp-create-dirs -T data/build/bind-${BIND_VERSION}.deb -u $FTP_USERNAME:$FTP_PASSWORD $SCHEME://$FTP_SERVER/build/bind-${BIND_VERSION}.deb"
