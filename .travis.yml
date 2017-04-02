@@ -1,15 +1,4 @@
 
-<<<<<<< HEAD
-sudo: required
-env:
-  global:
-    - BIND_VERSION=$(awk -F '=' '{print $2}' .bind_version)
-before_script: make latest-version
-script: make
-after_script: export BIND_VERSION=$(awk -F '=' '{print $2}' .bind_version)
-  
-
-=======
 sudo: true
 
 before_script:
@@ -17,7 +6,6 @@ before_script:
   - export BIND_VERSION=$(awk -F '=' '{print $2}' .bind_version)
 script:
   - make
->>>>>>> BETA_v0.2
 
 services:
     - docker
