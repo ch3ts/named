@@ -11,7 +11,11 @@ my %connection_hash = (
         "password"      => "anonymous"
 );
 
+<<<<<<< HEAD
 my $ftp_con = Net::FTP->new( $connection_hash{"server"}, Debug => 0  );
+=======
+my $ftp_con = Net::FTP->new( $connection_hash{"server"}, Debug => 1, Passive => 1  );
+>>>>>>> BETA_v0.2
 
 $ftp_con->login( $connection_hash{ "login" }, $connection_hash{ "password" } ) or die "Cannot login ", $ftp_con->message;
 $ftp_con->cwd( $connection_hash{ "uri" } );
@@ -49,7 +53,10 @@ foreach my $number ( reverse 0..16 )
 
 
 my $environment_variable = (reverse map( sort($_), @new_sorted_array))[0];
+<<<<<<< HEAD
 
+=======
+>>>>>>> BETA_v0.2
 $ENV{BIND_VERSION} = $environment_variable;
 
 open( my $fhw, ">", ".bind_version" ) or die ($!);
