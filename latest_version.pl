@@ -6,9 +6,9 @@ use Net::FTP;
 
 my %connection_hash = (
         "server"            => "ftp.isc.org",
-        "uri"                   => "/isc/bind9/",
-        "login"               => "anonymous",
-        "password"      => "anonymous"
+        "uri"               => "/isc/bind9/",
+        "login"             => "anonymous",
+        "password"          => "anonymous"
 );
 
 my @new_sorted_array = undef;
@@ -33,7 +33,7 @@ my $counter = 0;
 foreach my $number ( reverse 0..16 ) {
     if ( $counter eq 0 ) {
         map {
-            if ( $_ =~ /9\.$number.*/ ) {
+            if ( $_ =~ /9\.$number\.[0-9]/ ) {
                 push ( @new_sorted_array, $_ );
                 $counter = 1;
             }   
@@ -43,7 +43,7 @@ foreach my $number ( reverse 0..16 ) {
 
 eval {
     open( my $fhw, ">", ".bind_version" );
-    print $fhw "-e BIND_VERSION=" . (reverse map( sort($_), @new_sorted_array))[0];
+    print $fhw "-e BIND_VERSION=" . ( reverse map( sort($_ ), @new_sorted_array ) )[0];
     close($fhw);
     1;
 } or do {
